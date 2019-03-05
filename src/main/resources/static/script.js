@@ -26,7 +26,7 @@ function createItem(item,show){
             'Content-Type':'application/json'
         }
     }).done(function (item) {
-        console.log(JSON.stringify(item))
+        console.log("Nuevo item creado: "+JSON.stringify(item))
         show(item)
     })
 }
@@ -42,7 +42,7 @@ function updateItem(item,id) {
             'Content-Type':'application/json'
         }
     }).done(function (item){
-        console.log(JSON.stringify(item))
+        console.log("Item Actualizado"+JSON.stringify(item))
     })
 }
 
