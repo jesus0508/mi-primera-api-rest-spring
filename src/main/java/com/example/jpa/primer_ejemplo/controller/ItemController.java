@@ -1,41 +1,41 @@
 package com.example.jpa.primer_ejemplo.controller;
 
-import com.example.jpa.primer_ejemplo.entity.Item;
-import com.example.jpa.primer_ejemplo.respository.ItemRepository;
+import com.example.jpa.primer_ejemplo.domain.Item;
+import com.example.jpa.primer_ejemplo.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/items")
 public class ItemController {
 
     @Autowired
-    ItemRepository itemRepository;
+    ItemService itemService;
 
-    @RequestMapping(method = RequestMethod.GET)
-    public List<Item> findItems(){
-        return itemRepository.findAll();
+    @GetMapping
+    public ResponseEntity<Set<Item>> findItems(){
+        return new ResponseEntity<>(itemService.getAllItems(),HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public ResponseEntity<Item> addItem(@RequestBody Item item){
-        Item newItem=itemRepository.saveAndFlush(item);
+        Item newItem=itemService.addItem(item);
         return new ResponseEntity<>(newItem, HttpStatus.CREATED);
     }
 
-    @RequestMapping(value="/{id}",method=RequestMethod.PUT)
+    @PutMapping("/{id}")
     public ResponseEntity<Item> updateItem(@RequestBody Item item,@PathVariable int id){
-        Item updateItem=itemRepository.saveAndFlush(item);
+        Item updateItem=itemService.updateItem(item,id);
         return new ResponseEntity<>(updateItem,HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/{id}",method=RequestMethod.DELETE)
+    @DeleteMapping("/{id}")
     public void deleteItem(@PathVariable Integer id){
-        itemRepository.deleteById(id);
+        itemService.deleteItem(id);
     }
 
 }

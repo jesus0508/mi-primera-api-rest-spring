@@ -1,4 +1,4 @@
-package com.example.jpa.primer_ejemplo.entity;
+package com.example.jpa.primer_ejemplo.domain;
 
 import javax.persistence.*;
 
